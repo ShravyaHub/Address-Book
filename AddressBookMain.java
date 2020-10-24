@@ -8,7 +8,7 @@ public class AddressBookMain {
         Scanner scanner = new Scanner(System.in);
         while (true) {
 
-            System.out.println("Choose:\n 1.Add person\n 2.Edit person\n 3.Delete person");
+            System.out.println("Choose:\n 1.Add person\n 2.Edit person\n 3.Delete person\n 4.Sort address book alphabetically");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -24,6 +24,10 @@ public class AddressBookMain {
 
                 case 3:
                     addressBookManager.deletePerson();
+                    break;
+
+                case 4:
+                    addressBookManager.sortAlphabetically();
                     break;
 
                 default:
