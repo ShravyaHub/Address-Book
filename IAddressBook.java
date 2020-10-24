@@ -4,4 +4,6 @@ public interface IAddressBook {
 
     void editPerson();
 
+    void deletePerson();
+
 }

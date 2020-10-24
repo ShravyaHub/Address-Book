@@ -96,4 +96,26 @@ public class AddressBookManager implements IAddressBook{
 
     }
 
+    public void deletePerson() {
+        for (int i = 0; i < contacts.size(); i++) {
+            Person person;
+            person = contacts.get(i);
+            System.out.println("Enter first name: ");
+            firstName = scanner.nextLine();
+            System.out.println("Enter last name: ");
+            lastName = scanner.nextLine();
+
+            if (firstName.equals(person.firstName) && lastName.equals(person.lastName)) {
+
+                contacts.remove(i);
+                System.out.println("Contact deleted");
+
+            } else {
+                System.out.println("Contact does not exist");
+            }
+
+        }
+
+    }
+
 }
