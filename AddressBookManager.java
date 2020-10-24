@@ -192,14 +192,14 @@ public class AddressBookManager implements IAddressBook{
         System.out.println("Choose:\n 1.city\n 2.State ");
         choice = scanner.nextInt();
         scanner.nextLine();
+        System.out.println("Enter first name: ");
+        firstName = scanner.nextLine();
+        System.out.println("Enter last name: ");
+        lastName = scanner.nextLine();
 
         switch(choice) {
 
             case 1:
-                System.out.println("Enter first name: ");
-                firstName = scanner.nextLine();
-                System.out.println("Enter last name: ");
-                lastName = scanner.nextLine();
                 System.out.println("Enter city: ");
                 city = scanner.nextLine();
                 for (Map.Entry<Person, String> person : cityPersonMap.entrySet()) {
@@ -219,10 +219,6 @@ public class AddressBookManager implements IAddressBook{
                 break;
 
             case 2:
-                System.out.println("Enter first name: ");
-                firstName = scanner.nextLine();
-                System.out.println("Enter last name: ");
-                lastName = scanner.nextLine();
                 System.out.println("Enter state: ");
                 state = scanner.nextLine();
                 for (Map.Entry<Person, String> person : statePersonMap.entrySet()) {
@@ -246,6 +242,41 @@ public class AddressBookManager implements IAddressBook{
 
         }
 
+    }
+
+    public void searchPeopleInCityOrState() {
+        System.out.println("Choose:\n 1.city\n 2.State ");
+        choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch(choice) {
+
+            case 1:
+                System.out.println("Enter city: ");
+                city = scanner.nextLine();
+                viewPeople(city, cityPersonMap);
+                break;
+
+            case 2:
+                System.out.println("Enter state: ");
+                state = scanner.nextLine();
+                viewPeople(state, statePersonMap);
+                break;
+
+            default:
+                System.out.println("Invalid input");
+
+        }
+    }
+
+    public void viewPeople(String cityOrState, HashMap<Person, String> personHashMap) {
+        keys.clear();
+        for (Map.Entry<Person, String> person : personHashMap.entrySet()) {
+            if (Objects.equals(cityOrState, person.getValue())) {
+                keys.add(person.getKey());
+                person.getKey().display();
+            }
+        }
     }
 
 }
