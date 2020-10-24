@@ -6,9 +6,12 @@ public class AddressBookManager implements IAddressBook{
     String firstName, lastName, address, city, state, zip, phoneNumber;
     Scanner scanner = new Scanner(System.in);
     ArrayList<Person> contacts = new ArrayList<>();
+    Person person;
+    boolean personExists;
 
     @Override
     public void createPerson() {
+        personExists = false;
         System.out.println("Enter first name: ");
         firstName = scanner.nextLine();
         System.out.println("Enter last name: ");
@@ -23,13 +26,31 @@ public class AddressBookManager implements IAddressBook{
         zip = scanner.nextLine();
         System.out.println("Enter phone number: ");
         phoneNumber = scanner.nextLine();
-        Person person = new Person(firstName, lastName, address, city, state, zip, phoneNumber);
-        contacts.add(person);
-        System.out.println("Contact added: " + person.firstName + " " + person.lastName);
+        if(contacts.size() > 0) {
+            for (int index = 0; index < contacts.size(); index++) {
+
+                person = contacts.get(index);
+
+                if (firstName.equals(person.firstName) && lastName.equals(person.lastName)) {
+
+                    System.out.println("Contact " + person.firstName + " " + person.lastName + " already exists");
+                    personExists = true;
+                    break;
+
+                }
+
+            }
+        }
+
+        if(!personExists) {
+            person = new Person(firstName, lastName, address, city, state, zip, phoneNumber);
+            contacts.add(person);
+            System.out.println("Contact added: " + person.firstName + " " + person.lastName);
+        }
     }
 
     public void editPerson() {
-        boolean personExists = false;
+        personExists = false;
         System.out.print("Enter first name: ");
         firstName = scanner.nextLine();
         System.out.println("Enter last name: ");
@@ -98,7 +119,6 @@ public class AddressBookManager implements IAddressBook{
 
     public void deletePerson() {
         for (int i = 0; i < contacts.size(); i++) {
-            Person person;
             person = contacts.get(i);
             System.out.println("Enter first name: ");
             firstName = scanner.nextLine();
