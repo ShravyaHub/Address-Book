@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookManager implements IAddressBook{
 
@@ -9,6 +7,10 @@ public class AddressBookManager implements IAddressBook{
     ArrayList<Person> contacts = new ArrayList<>();
     Person person;
     boolean personExists;
+    int choice;
+    HashMap<Person, String> cityPersonMap = new HashMap<>();
+    HashMap<Person, String> statePersonMap = new HashMap<>();
+    Set<Person> keys = new HashSet<>();
 
     @Override
     public void createPerson() {
@@ -28,9 +30,9 @@ public class AddressBookManager implements IAddressBook{
         System.out.println("Enter phone number: ");
         phoneNumber = scanner.nextLine();
         if(contacts.size() > 0) {
-            for (int index = 0; index < contacts.size(); index++) {
+            for (Person contact : contacts) {
 
-                person = contacts.get(index);
+                person = contact;
 
                 if (firstName.equals(person.firstName) && lastName.equals(person.lastName)) {
 
@@ -46,6 +48,8 @@ public class AddressBookManager implements IAddressBook{
         if(!personExists) {
             person = new Person(firstName, lastName, address, city, state, zip, phoneNumber);
             contacts.add(person);
+            cityPersonMap.put(person, city);
+            statePersonMap.put(person, state);
             System.out.println("Contact added: " + person.firstName + " " + person.lastName);
         }
     }
@@ -63,7 +67,7 @@ public class AddressBookManager implements IAddressBook{
 
                 personExists = true;
                 System.out.println("Edit:\n 1.Address\n 2.City\n 3.State\n 4.Zip\n 5.Phone number ");
-                int choice = scanner.nextInt();
+                choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
@@ -141,7 +145,7 @@ public class AddressBookManager implements IAddressBook{
 
     public void sortAlphabetically() {
 
-        Collections.sort(contacts, new SortByName());
+        contacts.sort(new SortByName());
 
         for (Person person : contacts) {
 
@@ -154,7 +158,7 @@ public class AddressBookManager implements IAddressBook{
     public void sortByCityStateZip() {
 
         System.out.println("Sort by:\n 1.City\n 2.State\n 3.Zip ");
-        int choice = scanner.nextInt();
+        choice = scanner.nextInt();
 
         switch(choice) {
 
@@ -163,11 +167,11 @@ public class AddressBookManager implements IAddressBook{
                 break;
 
             case 2:
-                Collections.sort(contacts, new SortByState());
+                contacts.sort(new SortByState());
                 break;
 
             case 3:
-                Collections.sort(contacts, new SortByZip());
+                contacts.sort(new SortByZip());
                 break;
 
             default:
@@ -178,6 +182,67 @@ public class AddressBookManager implements IAddressBook{
         for (Person person : contacts) {
 
             person.display();
+
+        }
+
+    }
+
+    public void viewPersonByCityOrState() {
+        personExists = false;
+        System.out.println("Choose:\n 1.city\n 2.State ");
+        choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch(choice) {
+
+            case 1:
+                System.out.println("Enter first name: ");
+                firstName = scanner.nextLine();
+                System.out.println("Enter last name: ");
+                lastName = scanner.nextLine();
+                System.out.println("Enter city: ");
+                city = scanner.nextLine();
+                for (Map.Entry<Person, String> person : cityPersonMap.entrySet()) {
+                    if (Objects.equals(city, person.getValue())) {
+                        keys.add(person.getKey());
+                    }
+                }
+                for (Person personData : keys) {
+                    if (firstName.equals(personData.firstName) && lastName.equals(personData.lastName) && city.equals(personData.city)) {
+                        personData.display();
+                        personExists = true;
+                    }
+                }
+                if(!personExists) {
+                    System.out.println("Contact does not exist");
+                }
+                break;
+
+            case 2:
+                System.out.println("Enter first name: ");
+                firstName = scanner.nextLine();
+                System.out.println("Enter last name: ");
+                lastName = scanner.nextLine();
+                System.out.println("Enter state: ");
+                state = scanner.nextLine();
+                for (Map.Entry<Person, String> person : statePersonMap.entrySet()) {
+                    if (Objects.equals(state, person.getValue())) {
+                        keys.add(person.getKey());
+                    }
+                }
+                for (Person personData : keys) {
+                    if (firstName.equals(personData.firstName) && lastName.equals(personData.lastName) && state.equals(personData.state)) {
+                        personData.display();
+                        personExists = true;
+                    }
+                }
+                if(!personExists) {
+                    System.out.println("Contact does not exist");
+                }
+                break;
+
+            default:
+                System.out.println("Invalid input");
 
         }
 
