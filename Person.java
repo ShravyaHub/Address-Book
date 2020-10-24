@@ -14,4 +14,10 @@ public class Person {
 
     }
 
+    public void display() {
+
+        System.out.println("First name: " + firstName + "\nLast name: " + lastName + "\nAddress: " + address + "\nCity : " + city + "\nState : " + state + "\nZip: " + zip + "\nPhone number : " + phoneNumber);
+
+    }
+
 }
