@@ -8,4 +8,6 @@ public interface IAddressBook {
 
     void sortAlphabetically();
 
+    void sortByCityStateZip();
+
 }
