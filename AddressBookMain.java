@@ -13,7 +13,8 @@ public class AddressBookMain {
                     "2.Edit person\n " +
                     "3.Delete person\n " +
                     "4.Sort address book alphabetically\n " +
-                    "5.Sort address book by city, state or zip");
+                    "5.Sort address book by city, state or zip\n " +
+                    "6.View person by city or state");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -37,6 +38,10 @@ public class AddressBookMain {
 
                 case 5:
                     addressBookManager.sortByCityStateZip();
+                    break;
+
+                case 6:
+                    addressBookManager.viewPersonByCityOrState();
                     break;
 
                 default:
