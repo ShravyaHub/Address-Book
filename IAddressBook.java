@@ -6,4 +6,6 @@ public interface IAddressBook {
 
     void deletePerson();
 
+    void sortAlphabetically();
+
 }
