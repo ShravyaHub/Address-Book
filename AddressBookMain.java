@@ -14,7 +14,8 @@ public class AddressBookMain {
                     "3.Delete person\n " +
                     "4.Sort address book alphabetically\n " +
                     "5.Sort address book by city, state or zip\n " +
-                    "6.View person by city or state");
+                    "6.View person by city or state\n " +
+                    "7. Search people in city or state");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -42,6 +43,10 @@ public class AddressBookMain {
 
                 case 6:
                     addressBookManager.viewPersonByCityOrState();
+                    break;
+
+                case 7:
+                    addressBookManager.searchPeopleInCityOrState();
                     break;
 
                 default:
