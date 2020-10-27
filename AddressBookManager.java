@@ -301,4 +301,18 @@ public class AddressBookManager implements IAddressBook{
         }
     }
 
+    public void countByCity() {
+        System.out.println("Enter city: ");
+        city = scanner.nextLine();
+        long count = contacts.stream().filter(person -> person.city.equals(city)).count();
+        System.out.println("The number of people in " + city + " is " + count);
+    }
+
+    public void countByState() {
+        System.out.println("Enter state: ");
+        state = scanner.nextLine();
+        long count = contacts.stream().filter(person -> person.state.equals(state)).count();
+        System.out.println("The number of people in " + state + " is " + count);
+    }
+
 }
