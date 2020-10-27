@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookManager implements IAddressBook{
 
@@ -145,12 +146,15 @@ public class AddressBookManager implements IAddressBook{
 
     public void sortAlphabetically() {
 
-        contacts.sort(new SortByName());
-
-        for (Person person : contacts) {
-
+        Comparator<Person> sortingNameList = (person1 , person2) -> {
+            if(person1.firstName.compareTo(person2.firstName) == 0)
+                return person1.lastName.compareTo(person2.lastName);
+            else
+                return person1.firstName.compareTo(person2.firstName);
+        };
+        List<Person> sortedNames = contacts.stream().sorted(sortingNameList).collect(Collectors.toList());
+        for(Person person : sortedNames) {
             person.display();
-
         }
 
     }
@@ -163,15 +167,15 @@ public class AddressBookManager implements IAddressBook{
         switch(choice) {
 
             case 1:
-                Collections.sort(contacts, new SortByCity());
+                sortingByCity();
                 break;
 
             case 2:
-                contacts.sort(new SortByState());
+                sortingByState();
                 break;
 
             case 3:
-                contacts.sort(new SortByZip());
+                sortingByZip();
                 break;
 
             default:
@@ -179,12 +183,30 @@ public class AddressBookManager implements IAddressBook{
 
         }
 
-        for (Person person : contacts) {
+    }
 
+    public void sortingByCity() {
+        Comparator<Person> sortingNameList = (person1 , person2) -> person1.city.compareTo(person2.city);
+        List<Person> sortedNames = contacts.stream().sorted(sortingNameList).collect(Collectors.toList());
+        for(Person person : sortedNames) {
             person.display();
-
         }
+    }
 
+    public void sortingByState() {
+        Comparator<Person> sortingNameList = (person1 , person2) -> person1.state.compareTo(person2.state);
+        List<Person> sortedNames = contacts.stream().sorted(sortingNameList).collect(Collectors.toList());
+        for(Person person : sortedNames) {
+            person.display();
+        }
+    }
+
+    public void sortingByZip() {
+        Comparator<Person> sortingNameList = (person1 , person2) -> person1.zip.compareTo(person2.zip);
+        List<Person> sortedNames = contacts.stream().sorted(sortingNameList).collect(Collectors.toList());
+        for(Person person : sortedNames) {
+            person.display();
+        }
     }
 
     public void viewPersonByCityOrState() {
