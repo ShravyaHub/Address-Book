@@ -15,7 +15,9 @@ public class AddressBookMain {
                     "4.Sort address book alphabetically\n " +
                     "5.Sort address book by city, state or zip\n " +
                     "6.View person by city or state\n " +
-                    "7. Search people in city or state");
+                    "7.Search people in city or state\n " +
+                    "8.Number of people in a city\n " +
+                    "9.Number of people in a state");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -47,6 +49,14 @@ public class AddressBookMain {
 
                 case 7:
                     addressBookManager.searchPeopleInCityOrState();
+                    break;
+
+                case 8:
+                    addressBookManager.countByCity();
+                    break;
+
+                case 9:
+                    addressBookManager.countByState();
                     break;
 
                 default:
