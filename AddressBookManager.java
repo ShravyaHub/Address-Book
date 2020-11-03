@@ -1,3 +1,10 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,7 +58,49 @@ public class AddressBookManager implements IAddressBook{
             contacts.add(person);
             cityPersonMap.put(person, city);
             statePersonMap.put(person, state);
+            addAddressBookToFile(firstName, lastName, address, city, state, phoneNumber, zip);
             System.out.println("Contact added: " + person.firstName + " " + person.lastName);
+        }
+    }
+
+    private void addAddressBookToFile(String firstName, String lastName, String address, String city, String state, String phoneNumber, String zip) {
+        System.out.println("Enter address book name: ");
+        String addressBookName = scanner.nextLine();
+        File contactsFile = new File("C:\\Users\\Shravya\\Desktop\\" + addressBookName + ".txt");
+        if (!contactsFile.exists()) {
+            try {
+                contactsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for(int index = 0; index < contacts.size(); index++) {
+            try {
+                FileWriter fw = new FileWriter(contactsFile.getAbsoluteFile(), true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("Contact:" +
+                        "\n1.First name: " + firstName +
+                        "\n2.Last name: " + lastName +
+                        "\n3.Address: " + address +
+                        "\n4.City: " + city +
+                        "\n5.State: " + state +
+                        "\n6.Phone number: " + phoneNumber +
+                        "\n7.Zip: " + zip + "\n");
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void showContactsFromFile() {
+        System.out.println("Enter address book name: ");
+        String addressBookFile = scanner.nextLine();
+        Path filePath = Paths.get("C:\\Users\\Shravya\\Desktop\\" + addressBookFile + ".txt");
+        try {
+            Files.lines(filePath).map(line -> line.trim()).forEach(line -> System.out.println(line));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -314,5 +363,4 @@ public class AddressBookManager implements IAddressBook{
         long count = contacts.stream().filter(person -> person.state.equals(state)).count();
         System.out.println("The number of people in " + state + " is " + count);
     }
-
 }
