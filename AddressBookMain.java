@@ -17,7 +17,9 @@ public class AddressBookMain {
                     "6.View person by city or state\n " +
                     "7.Search people in city or state\n " +
                     "8.Number of people in a city\n " +
-                    "9.Number of people in a state");
+                    "9.Number of people in a state\n " +
+                    "10.Add address book to file\n" +
+                    "11.Read address book from file");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -57,6 +59,14 @@ public class AddressBookMain {
 
                 case 9:
                     addressBookManager.countByState();
+                    break;
+
+                case 10:
+                    addressBookManager.createPerson();
+                    break;
+
+                case 11:
+                    addressBookManager.showContactsFromFile();
                     break;
 
                 default:
